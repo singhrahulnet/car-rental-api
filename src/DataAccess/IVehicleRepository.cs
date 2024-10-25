@@ -1,6 +1,6 @@
-﻿using CarRentalApi.DataModel;
+﻿using VehicleRentalApi.DataModel;
 
-namespace CarRentalApi.DataAccess
+namespace VehicleRentalApi.DataAccess
 {
 	internal interface IVehicleRepository
 	{

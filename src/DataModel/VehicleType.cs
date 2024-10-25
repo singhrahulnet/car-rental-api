@@ -1,4 +1,4 @@
-﻿namespace CarRentalApi.DataModel
+﻿namespace VehicleRentalApi.DataModel
 {
 	public enum VehicleType
 	{

@@ -1,10 +1,10 @@
-﻿using CarRentalApi.Contracts;
+﻿using VehicleRentalApi.Contracts;
 using FluentValidation.Results;
 
-namespace CarRentalApi.Domain
+namespace VehicleRentalApi.Domain
 {
 	public interface IValidator
 	{
-		ValidationResult Validate(CarReservation carReservation);
+		ValidationResult Validate(VehicleReservationRequest vehicleReservationRequest);
 	}
 }

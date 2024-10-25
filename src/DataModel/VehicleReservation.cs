@@ -1,4 +1,4 @@
-﻿namespace CarRentalApi.DataModel
+﻿namespace VehicleRentalApi.DataModel
 {
 	internal class VehicleReservation
 	{

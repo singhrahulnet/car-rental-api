@@ -1,1 +1,1 @@
-# car-rental-api
+# vehicle-rental-api

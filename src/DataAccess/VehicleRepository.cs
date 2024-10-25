@@ -1,7 +1,7 @@
-﻿using CarRentalApi.DataModel;
+﻿using VehicleRentalApi.DataModel;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarRentalApi.DataAccess
+namespace VehicleRentalApi.DataAccess
 {
 	internal class VehicleRepository : DbContext, IVehicleRepository
 	{

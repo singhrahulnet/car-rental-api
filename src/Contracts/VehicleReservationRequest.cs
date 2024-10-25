@@ -1,8 +1,8 @@
-﻿using CarRentalApi.DataModel;
+﻿using VehicleRentalApi.DataModel;
 
-namespace CarRentalApi.Contracts
+namespace VehicleRentalApi.Contracts
 {
-	public class CarReservation
+	public class VehicleReservationRequest
 	{
 		public DateTime PickupOn { get; set; }
 		public DateTime ReturnOn { get; set; }		

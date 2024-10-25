@@ -1,25 +1,25 @@
-﻿using CarRentalApi.Contracts;
+﻿using VehicleRentalApi.Contracts;
 using FluentValidation;
 
-namespace CarRentalApi.Domain
+namespace VehicleRentalApi.Domain
 {
-	internal class Validator : AbstractValidator<CarReservation>, IValidator
+	internal class Validator : AbstractValidator<VehicleReservationRequest>, IValidator
 	{
 		public Validator()
 		{
-			RuleFor(carReservation => carReservation.VehicleType)
+			RuleFor(vehicleReservation => vehicleReservation.VehicleType)
 				.NotNull()
-				.WithMessage("Vehicle type is required to reserve a car.");
+				.WithMessage("Vehicle type is required to reserve a vehicle.");
 
-			RuleFor(carReservation => carReservation)
+			RuleFor(vehicleReservation => vehicleReservation)
 				.Must(HaveReturnDateLaterThanPickupDate())
 				.WithMessage("The return date must be on or later than pick up date.");
 		}
 
-		private Func<CarReservation, bool> HaveReturnDateLaterThanPickupDate()
+		private Func<VehicleReservationRequest, bool> HaveReturnDateLaterThanPickupDate()
 		{
-			return careReservation =>
-				careReservation.ReturnOn >= careReservation.PickupOn;
+			return vehicleReservation =>
+				vehicleReservation.ReturnOn >= vehicleReservation.PickupOn;
 		}
 	}
 }

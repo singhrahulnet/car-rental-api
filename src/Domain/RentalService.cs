@@ -1,15 +1,15 @@
-﻿using CarRentalApi.Contracts;
+﻿using VehicleRentalApi.Contracts;
 
-namespace CarRentalApi.Domain
+namespace VehicleRentalApi.Domain
 {
 	internal class RentalService : IRentalService
 	{
-		public Task<IEnumerable<CarAvailabilityResponse>> GetCarsAsync(CarAvailabilityQuery query)
+		public Task<IEnumerable<VehicleAvailabilityResponse>> GetVehiclesAsync(VehicleAvailabilityQuery query)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task ReserveCarAsync(CarReservation reservation)
+		public Task ReserveVehicleAsync(VehicleReservationRequest reservation)
 		{
 			throw new NotImplementedException();
 		}

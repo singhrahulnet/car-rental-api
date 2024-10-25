@@ -1,5 +1,5 @@
-using CarRentalApi.DataAccess;
-using CarRentalApi.Domain;
+using VehicleRentalApi.DataAccess;
+using VehicleRentalApi.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 

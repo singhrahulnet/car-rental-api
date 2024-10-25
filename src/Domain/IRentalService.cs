@@ -1,10 +1,10 @@
-﻿using CarRentalApi.Contracts;
+﻿using VehicleRentalApi.Contracts;
 
-namespace CarRentalApi.Domain
+namespace VehicleRentalApi.Domain
 {
 	public interface IRentalService
 	{
-		Task<IEnumerable<CarAvailabilityResponse>> GetCarsAsync(CarAvailabilityQuery query);
-		Task ReserveCarAsync(CarReservation reservation);
+		Task<IEnumerable<VehicleAvailabilityResponse>> GetVehiclesAsync(VehicleAvailabilityQuery query);
+		Task ReserveVehicleAsync(VehicleReservationRequest reservation);
 	}
 }
