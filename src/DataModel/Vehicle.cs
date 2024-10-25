@@ -2,7 +2,7 @@
 {
 	internal class Vehicle
 	{
-        int Id { get; set; }
-        VehicleType VehicleType { get; set; }
+        public int Id { get; set; }
+        public VehicleType VehicleType { get; set; }
     }
 }

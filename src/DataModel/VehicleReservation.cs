@@ -2,9 +2,9 @@
 {
 	internal class VehicleReservation
 	{
-		int Id { get; set; }
-		int VehicleId { get; set; }
-		DateTime PickupOn { get; set; }
-		DateTime ReturnOn { get; }
+		public int Id { get; set; }
+		public int VehicleId { get; set; }
+		public DateTime PickupOn { get; set; }
+		public DateTime ReturnOn { get; }
 	}
 }
