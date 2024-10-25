@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IRentalService, RentalService>();
 builder.Services.AddSingleton<IValidator, Validator>();
 
 var app = builder.Build();
