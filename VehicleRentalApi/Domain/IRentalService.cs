@@ -4,7 +4,7 @@ namespace VehicleRentalApi.Domain
 {
 	public interface IRentalService
 	{
-		Task<IEnumerable<VehicleAvailabilityResponse>> GetVehiclesAsync(VehicleAvailabilityQuery query);
+		Task<IEnumerable<VehicleAvailabilityResponse>> GetAvailableVehiclesAsync(VehicleAvailabilityQuery query);
 		Task ReserveVehicleAsync(VehicleReservationRequest reservation);
 	}
 }

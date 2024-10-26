@@ -26,7 +26,7 @@ namespace VehicleRentalApi.Tests.Unit
 		public async Task Given_Get_Returns_NoVehicles_Then_Response_Is_NotFound()
 		{
 			var vehicleAvailabilityQuery = new VehicleAvailabilityQuery();
-			_mockRentalService.Setup(x => x.GetVehiclesAsync(vehicleAvailabilityQuery))
+			_mockRentalService.Setup(x => x.GetAvailableVehiclesAsync(vehicleAvailabilityQuery))
 				.ReturnsAsync(new List<VehicleAvailabilityResponse>());
 
 			var result = await sut.Get(vehicleAvailabilityQuery);
@@ -43,7 +43,7 @@ namespace VehicleRentalApi.Tests.Unit
 				new VehicleAvailabilityResponse(),
 				new VehicleAvailabilityResponse()
 			};
-			_mockRentalService.Setup(x => x.GetVehiclesAsync(vehicleAvailabilityQuery))
+			_mockRentalService.Setup(x => x.GetAvailableVehiclesAsync(vehicleAvailabilityQuery))
 				.ReturnsAsync(vehicles);
 
 			var result = await sut.Get(vehicleAvailabilityQuery);

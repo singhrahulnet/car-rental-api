@@ -22,7 +22,7 @@ namespace VehicleRentalApi.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Get([FromQuery] VehicleAvailabilityQuery vehicleAvailabilityQuery)
 		{
-			var result = await _rentalService.GetVehiclesAsync(vehicleAvailabilityQuery);
+			var result = await _rentalService.GetAvailableVehiclesAsync(vehicleAvailabilityQuery);
 
 			if (result.Any() == false) { return NotFound(); }
 
