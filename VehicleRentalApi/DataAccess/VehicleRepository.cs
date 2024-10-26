@@ -38,12 +38,6 @@ namespace VehicleRentalApi.DataAccess
 			return await _vehicles.ToListAsync();
 		}
 
-		public async Task AddVehicleToInventoryAsync(Vehicle vehicle)
-		{
-			_vehicles.Add(vehicle);
-			await SaveChangesAsync();
-		}
-
 		public async Task<IEnumerable<VehicleReservation>> GetVehiclesReservationsAsync()
 		{
 			return await _vehiclesReservations.ToListAsync();
