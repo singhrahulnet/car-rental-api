@@ -167,6 +167,33 @@ namespace VehicleRentalApi.Tests.Unit
 		}
 
 		[Fact]
+		public async void Given_Both_Dates_Fall_Beyond_Reservations_Then_All__Matching_Vehicles_Are_Returned_With_Correct_Count()
+		{
+			_mockVehicleRepository.Setup(repo => repo.GetAvailableVehiclesAsync()).ReturnsAsync(new List<Vehicle>
+			{
+				new Vehicle { VehicleType = VehicleType.SEDAN },
+				new Vehicle { VehicleType = VehicleType.SEDAN },
+				new Vehicle { VehicleType = VehicleType.SUV },
+				new Vehicle { VehicleType = VehicleType.SUV },
+				new Vehicle { VehicleType = VehicleType.VAN }
+			});
+
+			_mockVehicleRepository.Setup(repo => repo.GetVehiclesReservationsAsync()).ReturnsAsync(new List<VehicleReservation>
+			{
+				//AddDays(3) to AddDays(7)
+				new VehicleReservation { VehicleType = VehicleType.SEDAN, PickupOn = DateTime.Now.AddDays(3), ReturnOn = DateTime.Now.AddDays(7) },
+				//AddDays(4) to AddDays(8)
+				new VehicleReservation { VehicleType = VehicleType.SUV, PickupOn = DateTime.Now.AddDays(4), ReturnOn = DateTime.Now.AddDays(8) }
+			});
+
+			//AddDays(9) to AddDays(11)
+			var result = await sut.GetAvailableVehiclesAsync(new VehicleAvailabilityQuery { VehicleTypes = [VehicleType.SEDAN, VehicleType.SUV], PickupOn = DateTime.Now.AddDays(9), ReturnOn = DateTime.Now.AddDays(11) });
+			Assert.Equal(2, result.Count());
+			Assert.Equal(2, result.First(v => v.VehicleType == VehicleType.SEDAN).NumbersAvailable);
+			Assert.Equal(2, result.First(v => v.VehicleType == VehicleType.SUV).NumbersAvailable);
+		}
+
+		[Fact]
 		public async void Given_Vehicle_NonAvailable_Then_ReserveVehicleAsync_Throws_Exception()
 		{
 			_mockVehicleRepository.Setup(repo => repo.ExecuteInTransactionAsync(It.IsAny<Func<Task>>()))
