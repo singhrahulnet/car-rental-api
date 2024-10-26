@@ -32,13 +32,21 @@ namespace VehicleRentalApi.Controllers
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Post([FromBody] VehicleReservationRequest vehicleReservationRequest)
 		{
 			var validationResult = _validator.Validate(vehicleReservationRequest);
 
 			if (validationResult.IsValid == false) { return BadRequest(validationResult.Errors); }
 
-			await _rentalService.ReserveVehicleAsync(vehicleReservationRequest);
+			try
+			{
+				await _rentalService.ReserveVehicleAsync(vehicleReservationRequest);
+			}
+			catch (RequestedVehicleNotAvailableException ex)
+			{
+				return NotFound(ex.Message);
+			}
 
 			return Ok("Vehicle reserved for requested dates");
 		}

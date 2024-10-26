@@ -68,6 +68,22 @@ namespace VehicleRentalApi.Tests.Unit
 		}
 
         [Fact]
+		public async Task Given_RentalService_Throws_RequestedVehicleNotAvailableException_Then_POST_Response_Is_NotFound()
+		{
+            var vehicleReservationRequest = new VehicleReservationRequest();
+            _mockValidatioResult.Setup(x => x.IsValid).Returns(true);
+            _mockValidator.Setup(x => x.Validate(vehicleReservationRequest))
+                .Returns(_mockValidatioResult.Object);
+
+            _mockRentalService.Setup(x => x.ReserveVehicleAsync(vehicleReservationRequest))
+                .ThrowsAsync(new RequestedVehicleNotAvailableException("Vehicle not available"));   
+            
+            var result = await sut.Post(vehicleReservationRequest);
+            
+            Assert.IsType<NotFoundObjectResult>(result);
+        }
+
+        [Fact]
 		public async Task Given_Valid_Request_And_Vehicle_Is_Available_Then_POST_Response_Is_Ok()
 		{
             var vehicleReservationRequest = new VehicleReservationRequest();
