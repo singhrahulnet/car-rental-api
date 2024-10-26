@@ -9,12 +9,12 @@ namespace VehicleRentalApi.Controllers
 	public class VehicleController : ControllerBase
 	{
 		private readonly IRentalService _rentalService;
-		private readonly IValidator _validator;
+		private readonly IValidatorResolver _validatorResolver;
 
-		public VehicleController(IRentalService rentalService, IValidator validator)
+		public VehicleController(IRentalService rentalService, IValidatorResolver validatorResolver)
 		{
 			_rentalService = rentalService;
-			_validator = validator;
+			_validatorResolver = validatorResolver;
 		}
 
 		[HttpGet]
@@ -22,6 +22,11 @@ namespace VehicleRentalApi.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Get([FromQuery] VehicleAvailabilityQuery vehicleAvailabilityQuery)
 		{
+			var validator = _validatorResolver.GetValidator<VehicleAvailabilityQuery>();
+			var validationResult = validator.Validate(vehicleAvailabilityQuery);
+
+			if (validationResult.IsValid == false) { return BadRequest(validationResult.Errors); }
+
 			var result = await _rentalService.GetAvailableVehiclesAsync(vehicleAvailabilityQuery);
 
 			if (result.Any() == false) { return NotFound(); }
@@ -35,7 +40,8 @@ namespace VehicleRentalApi.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Post([FromBody] VehicleReservationRequest vehicleReservationRequest)
 		{
-			var validationResult = _validator.Validate(vehicleReservationRequest);
+			var validator = _validatorResolver.GetValidator<VehicleReservationRequest>();
+			var validationResult = validator.Validate(vehicleReservationRequest);
 
 			if (validationResult.IsValid == false) { return BadRequest(validationResult.Errors); }
 

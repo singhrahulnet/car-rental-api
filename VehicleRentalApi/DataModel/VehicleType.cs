@@ -5,9 +5,9 @@ namespace VehicleRentalApi.DataModel
 	[JsonConverter(typeof(JsonStringEnumConverter))]
 	public enum VehicleType
 	{
-		COMPACT,
-		SEDAN,
-		SUV,
-		VAN
+		COMPACT = 1,
+		SEDAN = 2,
+		SUV = 3,
+		VAN = 4
 	}
 }
