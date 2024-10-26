@@ -194,7 +194,7 @@ namespace VehicleRentalApi.Tests.Unit
 		}
 
 		[Fact]
-		public async void Given_Vehicle_NonAvailable_Then_ReserveVehicleAsync_Throws_Exception()
+		public async void Given_Vehicle_NonAvailable_Then_ReserveVehicleAsync_Throws_RequestedVehicleNotAvailableException()
 		{
 			_mockVehicleRepository.Setup(repo => repo.ExecuteInTransactionAsync(It.IsAny<Func<Task>>()))
 									.Returns<Func<Task>>(operation => operation());
