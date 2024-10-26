@@ -1,5 +1,8 @@
-﻿namespace VehicleRentalApi.DataModel
+﻿using System.Text.Json.Serialization;
+
+namespace VehicleRentalApi.DataModel
 {
+	[JsonConverter(typeof(JsonStringEnumConverter))]
 	public enum VehicleType
 	{
 		COMPACT,

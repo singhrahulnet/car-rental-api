@@ -10,10 +10,12 @@ namespace VehicleRentalApi.DataAccess
 
 		public VehicleRepository() { }
 
-		public VehicleRepository(DbContextOptions<VehicleRepository> options) : base(options) { }
-
-		protected override void OnConfiguring(DbContextOptionsBuilder options)
-			=> options.UseInMemoryDatabase("VehiclesDB");
+		public VehicleRepository(DbContextOptions<VehicleRepository> options) : base(options)
+		{
+			_vehicles = Set<Vehicle>();
+			_vehiclesReservations = Set<VehicleReservation>();
+			Database.EnsureCreated();
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -27,6 +29,8 @@ namespace VehicleRentalApi.DataAccess
 			{
 				entity.HasKey(x => x.Id);
 			});
+
+			modelBuilder.Entity<Vehicle>().HasData(SeedData.Generate());
 		}
 
 		public async Task<IEnumerable<Vehicle>> GetAvailableVehiclesAsync()
