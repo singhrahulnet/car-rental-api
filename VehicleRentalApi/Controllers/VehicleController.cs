@@ -12,20 +12,35 @@ namespace VehicleRentalApi.Controllers
 		private readonly IValidator _validator;
 
 		public VehicleController(IRentalService rentalService, IValidator validator)
-        {
+		{
 			_rentalService = rentalService;
 			_validator = validator;
-        }
+		}
 
-        [HttpGet]
-		public IEnumerable<string> Get([FromQuery] VehicleAvailabilityQuery vehicleAvailabilityQuery)
+		[HttpGet]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<VehicleAvailabilityResponse>))]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<IActionResult> Get([FromQuery] VehicleAvailabilityQuery vehicleAvailabilityQuery)
 		{
-			return new string[] { "value1", "value2" };
+			var result = await _rentalService.GetVehiclesAsync(vehicleAvailabilityQuery);
+
+			if (result.Any() == false) { return NotFound(); }
+
+			return Ok(result);
 		}
 
 		[HttpPost]
-		public void Post([FromBody] VehicleReservationRequest vehicleReservationRequest)
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<IActionResult> Post([FromBody] VehicleReservationRequest vehicleReservationRequest)
 		{
+			var validationResult = _validator.Validate(vehicleReservationRequest);
+
+			if (validationResult.IsValid == false) { return BadRequest(validationResult.Errors); }
+
+			await _rentalService.ReserveVehicleAsync(vehicleReservationRequest);
+
+			return Ok("Vehicle reserved for requested dates");
 		}
 	}
 }
