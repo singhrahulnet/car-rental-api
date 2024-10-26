@@ -12,30 +12,30 @@ namespace VehicleRentalApi.Domain
 				.NotEmpty()
 				.WithMessage("Vehicle type is required to reserve a vehicle.");
 
-			RuleFor(vehicleReservation => vehicleReservation.PickupOn)
+			RuleFor(vehicleReservation => vehicleReservation.PickupOn.Date)
 				.NotEmpty()
 				.WithMessage("The pick up date must be specified");
 
-			RuleFor(vehicleReservation => vehicleReservation.ReturnOn)
+			RuleFor(vehicleReservation => vehicleReservation.ReturnOn.Date)
 				.NotEmpty()
 				.WithMessage("The return date must be specified")
-				.GreaterThanOrEqualTo(reservation => reservation.PickupOn)
-				.WithMessage("The return date must be on or later than pick up date.");
+				.GreaterThan(reservation => reservation.PickupOn.Date)
+				.WithMessage("The return date must be later than pick up date.");
 		}
 	}
 	internal class ValidatorForAvailabilityQuery : AbstractValidator<VehicleAvailabilityQuery>
 	{
 		public ValidatorForAvailabilityQuery()
 		{
-			RuleFor(query => query.PickupOn)
+			RuleFor(query => query.PickupOn.Date)
 				.NotEmpty()
 				.WithMessage("The pick up date must be specified");
 
-			RuleFor(query => query.ReturnOn)
+			RuleFor(query => query.ReturnOn.Date)
 				.NotEmpty()
 				.WithMessage("The return date must be specified")
-				.GreaterThanOrEqualTo(query => query.PickupOn)
-				.WithMessage("The return date must be on or later than pick up date.");
+				.GreaterThan(query => query.PickupOn.Date)
+				.WithMessage("The return date must be later than pick up date.");
 		}
 	}
 
