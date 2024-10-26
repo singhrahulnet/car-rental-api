@@ -6,6 +6,6 @@ namespace VehicleRentalApi.Contracts
 	{
 		public DateTime PickupOn { get; set; }
 		public DateTime ReturnOn { get; set; }		
-		public VehicleType[]? VehicleTypes { get; set; }
+		public VehicleType[] VehicleTypes { get; set; }
 	}
 }

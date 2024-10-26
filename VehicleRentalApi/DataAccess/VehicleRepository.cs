@@ -29,10 +29,20 @@ namespace VehicleRentalApi.DataAccess
 			});
 		}
 
+		public async Task<IEnumerable<Vehicle>> GetAvailableVehiclesAsync()
+		{
+			return await _vehicles.ToListAsync();
+		}
+
 		public async Task AddVehicleToInventoryAsync(Vehicle vehicle)
 		{
 			_vehicles.Add(vehicle);
 			await SaveChangesAsync();
+		}
+
+		public async Task<IEnumerable<VehicleReservation>> GetVehiclesReservationsAsync()
+		{
+			return await _vehiclesReservations.ToListAsync();
 		}
 
 		public async Task AddVehicleReservationAsync(VehicleReservation reservation)
@@ -41,9 +51,19 @@ namespace VehicleRentalApi.DataAccess
 			await SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<Vehicle>> GetVehiclesAsync()
+		public async Task ExecuteInTransactionAsync(Func<Task> operation)
 		{
-			return await _vehicles.ToListAsync();
+			using var transaction = await Database.BeginTransactionAsync();
+			try
+			{
+				await operation();
+				await transaction.CommitAsync();
+			}
+			catch
+			{
+				await transaction.RollbackAsync();
+				throw;
+			}
 		}
 	}
 }
