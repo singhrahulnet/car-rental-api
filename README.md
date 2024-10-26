@@ -9,6 +9,7 @@ This is the Vehicle Rental API project. It has
 ### Prerequisites
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- Optional [Docker](https://docs.docker.com/engine/install/)
 
 ### Installation
 
@@ -23,6 +24,13 @@ This is the Vehicle Rental API project. It has
     dotnet restore
     ```
 
+### Running Tests
+
+To run the tests, use the following command:
+```sh
+dotnet test
+```
+
 ### Running the Application
 
 To run the application, use the following command:
@@ -32,15 +40,17 @@ dotnet run
 
 The API will be available at `http://localhost:8080/swagger/index.html`.
 
-### Running Tests
 
-To run the tests, use the following command:
-```sh
-dotnet test
-```
+## Assumptions
+
+* Bookings must span at least one full day, meaning same-day pickup and return are not permitted.
+
+* Vehicles returned on a given day are available for new bookings starting on that same day.
 
 ## TODOs
 
 - **Foreign Key Relations**: FK relations and carefully indexed db.
 - **Datetime Handling**: Datetime handling needs to be culture invariant.
+- **Exception Handling**: Generic 5xx exceptions should be handled better by responding with user-friendly messages and appropriate status codes.
+- **Logging**: Logging is not implemented at all.
 - **Integration Tests**: Integration tests need to be added.

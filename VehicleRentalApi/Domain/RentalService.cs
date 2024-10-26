@@ -17,7 +17,7 @@ namespace VehicleRentalApi.Domain
 			var matchingVehicles = (await _vehicleRepository.GetAvailableVehiclesAsync())
 				.Where(VehicleTypeMatchesQuery(query));
 
-			var overlappingReservationsByVehicleType = (await _vehicleRepository.GetVehiclesReservationsAsync())				
+			var overlappingReservationsByVehicleType = (await _vehicleRepository.GetVehiclesReservationsAsync())
 				.Where(DatesOverlapWithExistingReservations(query))
 				.GroupBy(r => r.VehicleType)
 				.Select(g => new { VehicleType = g.Key, ReservedCount = g.Count() })
@@ -35,7 +35,9 @@ namespace VehicleRentalApi.Domain
 
 		private static Func<VehicleReservation, bool> DatesOverlapWithExistingReservations(VehicleAvailabilityQuery query)
 		{
-			return existingReservations => query.PickupOn < existingReservations.ReturnOn && query.ReturnOn > existingReservations.PickupOn;			
+			return existingReservations =>
+				query.PickupOn.Date < existingReservations.ReturnOn.Date &&
+				query.ReturnOn.Date > existingReservations.PickupOn.Date;
 		}
 
 		private static IEnumerable<VehicleAvailabilityResponse> SubtractReservedCountFromAvailableCount(IEnumerable<Vehicle> matchingVehicles, Dictionary<VehicleType, int> overlappingReservationsByVehicleType)
